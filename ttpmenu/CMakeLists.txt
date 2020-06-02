@@ -1,0 +1,60 @@
+﻿project(ttpmenu)
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/")
+
+set(COMMON_SRC
+  ../teraterm/common/ttlib.h
+  ../teraterm/common/ttlib.c
+  ../teraterm/common/i18n.h
+  ../teraterm/common/i18n.c
+  ../teraterm/common/codeconv.h
+  ../teraterm/common/compat_win.h
+  ../teraterm/common/dllutil.h
+  )
+
+source_group(
+  "common"
+  FILES
+  ${COMMON_SRC}
+  )
+
+set(SRC
+  resource.h
+  registry.cpp
+  ttpmenu.h
+  ttpmenu.cpp
+  winmisc.cpp
+  #
+  left.ico
+  right.ico
+  teraterm.ico
+  ttpmenu.rc
+  )
+
+
+include_directories(
+  ../teraterm/common
+  .
+  )
+
+add_executable(
+  ttpmenu WIN32
+  ${SRC}
+  ${COMMON_SRC}
+  )
+
+target_link_libraries(
+  ttpmenu
+  PRIVATE
+  common_static
+  version
+  comctl32
+  user32
+  gdi32
+  comdlg32
+  )
+
+install(
+  TARGETS ttpmenu
+  DESTINATION .
+  )
